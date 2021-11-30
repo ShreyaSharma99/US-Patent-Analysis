@@ -1,0 +1,75 @@
+<style> 
+  /* css style for button effects is taken from here:*/
+  /* https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover */ 
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: block;
+  }
+  .qbutton5 {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+  }
+  .qbutton5:hover {
+    background-color: #555555;
+    color: white;
+  }
+  .query_form {
+    display: none;
+  }
+  .query5_output_class {
+    display: block;
+  }
+</style>
+<h2> Know about the Assignor </h2>
+<button class="button qbutton5">
+User enters the Assignor Name whose record user wants to see and
+the system returns the number of transactions having entered Assignor as a participant and also
+the total number of patents involved in those transactions. <br>
+Output : Name — Transaction Count — Patent Count
+</button>
+
+<!-- show this onclicking query 1 button -->
+<div id = 'query5' class="query_form">
+  <br>
+  <form action="/form-handler5" method="POST">
+    <div>
+      Assignor Name(e.g. '!MAGINETHIS RENOVATIONS, LLC') <br><input type="text" name='assignor_name'><br><br>
+    </div>
+    <input type='submit' value='Submit'>
+  </form>
+</div>
+
+<!-- show this after submitting the form -->
+<div id="query5_output" class="query5_output_class">  
+  <table style="width:100%" border="1px solid black">
+      <tr>
+        <th> Name </th>
+        <th> Transaction Count </th>
+        <th> Patent Count </th>
+      </tr>
+    {% for row in users %}
+      <tr>
+        <td> {{ row[0] }}</td>
+        <td> {{ row[1] }}</td>
+        <td> {{ row[2] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<script type="text/javascript">
+  var height = document.getElementById('query5_output').parentElement.scrollHeight;
+  var parent_iframe = parent.document.getElementById('iframe5_id');
+  parent_iframe.height = height;
+</script>

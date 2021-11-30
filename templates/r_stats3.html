@@ -1,0 +1,33 @@
+<style>
+  .s_stats1_output_class {
+    display: block;
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+  }
+  th {
+    text-align: left;
+  }
+</style>
+<!-- show this after submitting the form -->
+<div id="r_stats3_output" class="r_stats3_output_class" align="center">  
+  <table style="width:50%">
+      <tr>
+        <th> Convey Type </th>
+        <th> Year </th>
+        <th> Average Lag </th>
+      </tr>
+    {% for row in result %}
+      <tr>
+        <td> {{ row[0] }}</td>
+        <td> {{ row[1] | int }}</td>
+        <td> {{ row[2] }} </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+</div>

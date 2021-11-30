@@ -1,0 +1,70 @@
+<style> 
+  /* css style for button effects is taken from here:*/
+  /* https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover */
+  .button {
+    background-color: #4CAF50; /* Green */
+    border:none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: block;
+  }
+  .dbutton2 {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+  .dbutton2:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  .delete_form {
+    display: none;
+  }
+  .delete2_output_class {
+    display: block;
+  }
+</style>
+<h2> Delete Query 2 </h2>
+<button id = "delete2_button" class="button dbutton2">
+  Description comes here
+</button>
+
+<!-- show this onclicking query 1 button -->
+<div id = 'delete2_form' class="delete_form">
+  <br>
+  <form action="/form-handler2_delete" method="POST">
+    <div>
+      input 1(e.g. ): <br><input type="text" name='in1'><br><br>
+    </div>
+    <input type='submit' value='Submit'>
+  </form>
+</div>
+
+<!-- show this after submitting the form -->
+<div id="delete2_output" class="delete2_output_class">  
+  <table style="width:100%" border="1px solid black">
+      <tr>
+        <th> name </th>
+        <th> age </th>
+      </tr>
+    {% for row in users %}
+      <tr>
+        <td> {{ row[0] }}</td>
+        <td> {{ row[1] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<script type="text/javascript">
+  var height = document.getElementById('delete2_output').parentElement.scrollHeight;
+  var parent_iframe = parent.document.getElementById('iframe2_id_delete');
+  parent_iframe.height = height;
+</script>

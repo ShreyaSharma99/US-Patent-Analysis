@@ -1,0 +1,78 @@
+<style> 
+  /* css style for button effects is taken from here:*/
+  /* https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover */ 
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: block;
+  }
+  .qbutton4 {
+    background-color: white;
+    color: black;
+    border: 2px solid #e7e7e7;
+  }
+  .qbutton4:hover {
+    background-color: #e7e7e7;
+    color: black;
+  }
+  .query_form {
+    display: none;
+  }
+  .query4_output_class {
+    display: block;
+  }
+</style>
+<h2> Know about the Assignee </h2>
+<button class="button qbutton4">
+User enters the first letter of Assignee Name and his country,
+whose record user wants to see and the system returns the number of transactions having entered
+Assignee as a participant and also the total number of patents involved in those transactions.<br>
+Output : Name — Transaction Count — Patent Count
+</button>
+
+<!-- show this onclicking query 1 button -->
+<div id = 'query4' class="query_form">
+  <br>
+  <form action="/form-handler4" method="POST">
+    <div>
+      first alphabet(e.g. 'a') <br><input type="text" name='first_char'><br><br>
+    </div>
+    <div>
+      country name(e.g. 'INDIA') <br><input type="text" name="country"><br><br>
+    </div>
+    <input type='submit' value='Submit'>
+  </form>
+</div>
+
+<!-- show this after submitting the form -->
+<div id="query4_output" class="query4_output_class">  
+  <table style="width:100%" border="1px solid black">
+      <tr>
+        <th> Name </th>
+        <th> Transaction Count </th>
+        <th> Patent Count </th>
+      </tr>
+    {% for row in users %}
+      <tr>
+        <td> {{ row[0] }}</td>
+        <td> {{ row[1] }}</td>
+        <td> {{ row[2] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<script type="text/javascript">
+  var height = document.getElementById('query4_output').parentElement.scrollHeight;
+  var parent_iframe = parent.document.getElementById('iframe4_id');
+  parent_iframe.height = height;
+</script>

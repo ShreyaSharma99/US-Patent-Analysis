@@ -1,0 +1,84 @@
+<style> 
+  /* css style for button effects is taken from here:*/
+  /* https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover */ 
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: block;
+  }
+  .qbutton7 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+  }
+  .qbutton7:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+  .query_form {
+    display: none;
+  }
+  .query7_output_class {
+    display: block;
+  }
+</style>
+<h2> Assignor-Assignee Relation </h2>
+<button class="button qbutton7" >
+User enters the name of an Assignor and Assignee and the system
+returns if they both have had any transactions and if yes, then the details of those transactions.<br>
+Output : Assignor Name — Assignee Name — rf id — Patent Title — Date Of Transaction —
+Type Of Transaction
+</button>
+
+<!-- show this onclicking query 1 button -->
+<div id = 'query7' class="query_form">
+  <br>
+  <form action="/form-handler7" method="POST">
+    <div>
+      Assignor Name(e.g. 'SAKUMA, TAKESHI'): <br><input type="text" name='assignor_name'><br><br>
+    </div>
+    <div>
+      Assignee Name(e.g. 'HONDA MOTOR CO., LTD'): <br><input type="text" name='assignee_name'><br><br>
+    </div>
+    <input type='submit' value='Submit'>
+  </form>
+</div>
+
+<!-- show this after submitting the form -->
+<div id="query7_output" class="query7_output_class">  
+  <table style="width:100%" border="1px solid black">
+      <tr>
+        <th> Assignor Name </th>
+        <th> Assignee Name </th>
+        <th> Rf ID </th>
+        <th> Patent </th>
+        <th> Date </th>
+        <th> Convey Type </th>
+      </tr>
+    {% for row in users %}
+      <tr>
+        <td> {{ row[0] }}</td>
+        <td> {{ row[1] }}</td>
+        <td> {{ row[2] }}</td>
+        <td> {{ row[3] }}</td>
+        <td> {{ row[4] }}</td>
+        <td> {{ row[5] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<script type="text/javascript">
+  var height = document.getElementById('query7_output').parentElement.scrollHeight;
+  var parent_iframe = parent.document.getElementById('iframe7_id');
+  parent_iframe.height = height;
+</script>

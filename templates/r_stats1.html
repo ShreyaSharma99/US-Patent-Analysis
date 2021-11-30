@@ -1,0 +1,31 @@
+<style>
+  .s_stats1_output_class {
+    display: block;
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+  }
+  th {
+    text-align: left;
+  }
+</style>
+<!-- show this after submitting the form -->
+<div id="r_stats1_output" class="r_stats1_output_class" align="center">  
+  <table style="width:50%">
+      <tr>
+        <th> Freq of Transaction </th>
+        <th> Convey Type </th>
+      </tr>
+    {% for row in result %}
+      <tr>
+        <td> {{ row[0] | int }}</td>
+        <td> {{ row[1] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+</div>

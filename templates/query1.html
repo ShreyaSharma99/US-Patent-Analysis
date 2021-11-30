@@ -1,0 +1,80 @@
+<style> 
+  /* css style for button effects is taken from here:*/
+  /* https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover */
+  .button {
+    background-color: #4CAF50; /* Green */
+    border:none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: block;
+  }
+  .qbutton1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+  .qbutton1:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  .query_form {
+    display: none;
+  }
+  .query1_output_class {
+    display: block;
+  }
+</style>
+<h2> Track Patent History </h2>
+<button id = "query1_button" class="button qbutton1">
+User inputs the patent number(string data type) and the system displays the transactions on that patent in a chronological order.
+<br>
+Output : rf id — Title — convey type — assignor name — assignee name — trans date
+</button>
+
+<!-- show this onclicking query 1 button -->
+<div id = 'query1' class="query_form">
+  <br>
+  <form action="/form-handler1" method="POST">
+    <div>
+      Document Grant Number(e.g. 6487682): <br><input type="text" name='doc_grant_number'><br><br>
+    </div>
+    <input type='submit' value='Submit'>
+  </form>
+</div>
+
+<!-- show this after submitting the form -->
+<div id="query1_output" class="query1_output_class">  
+  <table style="width:100%" border="1px solid black">
+      <tr>
+        <th> rf_id </th>
+        <th> Title </th>
+        <th> Convey Type </th>
+        <th> Assignor Name </th>
+        <th> Assignee Name </th>
+        <th> Transection Date </th>
+      </tr>
+    {% for row in users %}
+      <tr>
+        <td> {{ row[0] }}</td>
+        <td> {{ row[1] }}</td>
+        <td> {{ row[2] }}</td>
+        <td> {{ row[3] }}</td>
+        <td> {{ row[4] }}</td>
+        <td> {{ row[5] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<script type="text/javascript">
+  var height = document.getElementById('query1_output').parentElement.scrollHeight;
+  var parent_iframe = parent.document.getElementById('iframe1_id');
+  parent_iframe.height = height;
+</script>

@@ -1,0 +1,410 @@
+<!-- 
+  References:
+      https://terokarvinen.com/2017/database-connection-from-python-flask-to-postgre-using-raw-sql/index.html
+      https://stackoverflow.com/questions/9162933/make-iframe-height-dynamic-based-on-content-inside-jquery-javascript
+-->
+
+<html>
+  <head>
+    <link rel = "stylesheet" href = "/static/style.css">
+    <script src="/static/index.js"></script>
+    <style>
+      .stats_input_button {
+        background-color: white; /* Green */
+        border:1px solid black;
+        color: black;
+        padding: 16px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 4px 2px;
+        transition-duration: 0.1s;
+        cursor: pointer;
+        display: inline;
+        width: 600;
+        height: 100;
+      }
+      .stats_input_button:hover{
+        color: blue;
+        border: 1px solid blue;
+      }
+
+    </style>
+  </head>
+  
+  <body>
+    <!-- Add all tabs here  -->
+    <div class="tab" align="center">
+      <button class="tablinks" onclick="clickHandle(event, 'Home')"> Home </button>
+      <button class="tablinks" onclick="clickHandle(event, 'Query')"> Query </button>
+      <button class="tablinks" onclick="clickHandle(event, 'Statistics')"> Statistics </button>
+    </div>
+
+    <!-- Add content of all tabs -->
+    <div id="Home" class="tabcontent" align="center">
+      <h1> Welcome to US Patent Analysis Project !</h1> 
+      <p>
+        <h2> Guidelines </h2>
+        Since our database is large in size, the queries takes: 20 sec to 2 min to execute. If you click at a button and does not see anything new then it is because our query is processing at the back end and may take some time. Wait for it to return.
+      </p>
+      <p> <h2> We are</h2>
+        <ol>
+          <li> Rushil : 2017CS10487 </li>
+          <li> Shreya : 2017CS50493 </li>
+          <li> Dwijesh : 2017CS50407 </li>
+        </ol>
+      </p>
+    </div>
+
+    <div id="Query" class="tabcontent" align="center">
+      <iframe src='templates/query1.html' style='border:none;' id="iframe1_id" class="iframe_class"
+       width=1000  height = 300 align=center></iframe>
+      <iframe src='templates/query2.html' style='border:none;' id="iframe2_id" class="iframe_class"
+        width = 1000 height = 300 align = "center"></iframe>
+      <iframe src='templates/query3.html' style='border:none;' id="iframe3_id" class="iframe_class"
+        width = 1000 height = 300 align="center"></iframe>
+      <iframe src='templates/query4.html' style='border:none;' id="iframe4_id" class="iframe_class"
+        width = 1000 height = 300 align="center"></iframe>
+      <iframe src='templates/query5.html' style='border:none;' id="iframe5_id" class="iframe_class"
+        width = 1000 height = 300 align="center"></iframe>
+      <iframe src='templates/query6.html' style='border:none;' id="iframe6_id" class="iframe_class"
+        width = 1000 height = 300 align="center"></iframe>
+      <iframe src='templates/query7.html' style='border:none;' id="iframe7_id" class="iframe_class"
+        width = 1000 height = 300 align="center"></iframe>
+      <!-- delete queries -->
+      {% for i in range(1) %}
+      <iframe src='templates/delete{{ i+1 }}.html' style='border:none;' id="iframe{{ i+1 }}_id_delete" class="iframe_class"
+          width = 1000 height = 300 align="center"></iframe>
+      {% endfor %}
+      <!-- update queries -->
+      {% for i in range(4) %}
+      <iframe src='templates/update{{ i+1 }}.html' style='border:none;' id="iframe{{ i+1 }}_id_update" class="iframe_class"
+          width = 1000 height = 300 align="center"></iframe>
+      {% endfor %}
+      <!-- insert queries -->
+      {% for i in range(1) %}
+      <iframe src='templates/insert{{ i+1 }}.html' style='border:none;' id="iframe{{ i+1 }}_id_insert" class="iframe_class"
+          width = 1000 height = 300 align="center"></iframe>
+      {% endfor %}
+    </div>
+
+    <!--Shreya work -->
+    <div id="Statistics" class="tabcontent" align="center">
+      <!-- Rushil work -->
+      <div id = 'r_stats1' class="stats_form">
+        <form action="/r_stats1-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'>  Number of transactions filed of each type in the dataset<br>
+              Output : num assignments — type </button>
+        </form>
+      </div>
+      <div id = 'r_stats2' class="stats_form">
+        <form action="/r_stats2-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'>  
+            Average lag in recording of transaction at USPTO averaged over all the transactions in a year
+            <br>Output : year — avg lag
+          </button>
+        </form>
+      </div>
+      <div id = 'r_stats3' class="stats_form">
+        <form action="/r_stats3-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Average lag in the recording of transaction at USPTO for different types of transactions 
+            over the years <br>Output : convey ty — year — avg lag </button>
+        </form>
+      </div>
+      <div id = 'r_stats4' class="stats_form">
+        <form action="/r_stats4-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'>  Frequency of each type of error for each type of transaction
+            <br>Output : type of transaction — error — case count </button>
+        </form>
+      </div>
+      <div id = 's_stats1' class="stats_form">
+        <form action="/s_stats1-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Number of transactions recorded yearwise <br>Output : year — patent count </button>
+        </form>
+      </div>
+      <div id = 's_stats2' class="stats_form">
+        <form action="/s_stats2-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Top 2 months in each year in the order of number of patents filed
+            <br>Output : year — month — patent count </button>
+        </form>
+      </div>
+      <div id = 's_stats3' class="stats_form">
+        <form action="/s_stats3-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Patent count yearwise <br>Output : year — patent count </button>
+        </form>
+      </div>
+      <div id = 's_stats4' class="stats_form">
+        <form action="/s_stats4-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Annual rf id counts by recording year <br>Output : year — rf count </button>
+        </form>
+      </div>
+      <div id = 's_stats5' class="stats_form">
+        <form action="/s_stats5-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Annual property counts by recording year <br>Output : year — patent count </button>
+        </form>
+      </div>
+      <div id = 's_stats6' class="stats_form">
+        <form action="/s_stats6-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Recorded transactions (rf id count) by conveyance type and execution year 
+            <br>Output : year — convey ty — transactiob count </button>
+        </form>
+      </div>
+      <div id = 's_stats7' class="stats_form">
+        <form action="/s_stats7-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Properties affected by recorded transaction (property count) per execution year, 
+            by conveyance type
+            <br>Output : year — patent count </button>
+        </form>
+      </div>
+      <div id = 's_stats8' class="stats_form">
+        <form action="/s_stats8-form-handler" method="POST">
+          <button class='stats_input_button' type='submit'> Patents with different conveyance type, or name change by execution year (1980 - 2014)
+            <br>Output : year — convey ty — patent count </button>
+        </form>
+      </div>
+    </div>
+
+    <script type="text/javascript" language="javascript"> 
+      // Funtion to handle iframe clicks
+      function iframeClickHandler() {
+        var oFrame1 = document.getElementById("iframe1_id");
+        oFrame1.contentWindow.document.onclick = function() {
+          queryClick(event, 'query1', 'iframe1_id')
+        };
+        var oFrame2 = document.getElementById("iframe2_id");
+        oFrame2.contentWindow.document.onclick = function() {
+          queryClick(event, 'query2', 'iframe2_id')
+        };
+        var oFrame3 = document.getElementById("iframe3_id");
+        oFrame3.contentWindow.document.onclick = function() {
+          queryClick(event, 'query3', 'iframe3_id')
+        };
+        var oFrame4 = document.getElementById("iframe4_id");
+        oFrame4.contentWindow.document.onclick = function() {
+          queryClick(event, 'query4', 'iframe4_id')
+        };
+        var oFrame5 = document.getElementById("iframe5_id");
+        oFrame5.contentWindow.document.onclick = function() {
+          queryClick(event, 'query5', 'iframe5_id')
+        };
+        var oFrame6 = document.getElementById("iframe6_id");
+        oFrame6.contentWindow.document.onclick = function() {
+          queryClick(event, 'query6', 'iframe6_id')
+        };
+        var oFrame7 = document.getElementById("iframe7_id");
+        oFrame7.contentWindow.document.onclick = function() {
+          queryClick(event, 'query7', 'iframe7_id')
+        };
+        // delete Queries
+        var oframe1_delete = document.getElementById("iframe1_id_delete");
+        oframe1_delete.contentWindow.document.onclick = function() {
+          queryClick(event, 'delete1_form', "iframe1_id_delete");
+        }
+        // update Query
+        var oframe1_update = document.getElementById("iframe1_id_update");
+        oframe1_update.contentWindow.document.onclick = function() {
+          queryClick(event, 'update1_form', "iframe1_id_update");
+        }
+        var oframe2_update = document.getElementById("iframe2_id_update");
+        oframe2_update.contentWindow.document.onclick = function() {
+          queryClick(event, 'update2_form', "iframe2_id_update");
+        }
+        var oframe3_update = document.getElementById("iframe3_id_update");
+        oframe3_update.contentWindow.document.onclick = function() {
+          queryClick(event, 'update3_form', "iframe3_id_update");
+        }
+        var oframe4_update = document.getElementById("iframe4_id_update");
+        oframe4_update.contentWindow.document.onclick = function() {
+          queryClick(event, 'update4_form', "iframe4_id_update");
+        }
+        // insert Query
+        var oframe1_insert = document.getElementById("iframe1_id_insert");
+        oframe1_insert.contentWindow.document.onclick = function() {
+          queryClick(event, 'insert1_form', "iframe1_id_insert");
+        }
+      };
+      
+      // set iframe size for a given id
+      function iframeSizeId(id) {
+        var iframe1 = document.getElementById(id);
+        if (iframe1) {
+          iframe1.height = "";
+          iframe1_content = iframe1.contentDocument || iframe1.contentWindow.document;
+          iframe1.height = iframe1_content.body.scrollHeight + "px";
+        }
+      }
+
+      // set iframe size depending upon the content
+      function iframeSize() {
+        iframeSizeId('iframe1_id');
+        iframeSizeId('iframe2_id');
+        iframeSizeId('iframe3_id');
+        iframeSizeId('iframe4_id');
+        iframeSizeId('iframe5_id');
+        iframeSizeId('iframe6_id');
+        iframeSizeId('iframe7_id');
+        // delete Queryies
+        for (i=1; i<=1; i++) {
+          iframeSizeId('iframe' + i +'_id_delete');
+        }
+        // update Queryies
+        for (i=1; i<=4; i++) {
+          iframeSizeId('iframe' + i +'_id_update');
+        }
+        // insert Queryies
+        for (i=1; i<=1; i++) {
+          iframeSizeId('iframe' + i +'_id_insert');
+        }
+      }
+  
+      // <!-- adding script to handle tab clicks -->
+      function clickHandle(evt, tab_name) {
+        iframeClickHandler();
+        let i, tabcontent, tablinks;
+
+        // clear previous tab content
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i=0; i< tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+
+        // set the tab to be "active"
+        tablinks = document.getElementsByClassName("tablinks")
+        for (i=0; i<tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // display the clicked tab and set it to active
+        document.getElementById(tab_name).style.display = "block";
+        evt.currentTarget.className += " active";
+
+        if (tab_name == 'Query') {
+          // remove output of any query
+          query_output1 = document.getElementById('iframe1_id').contentWindow.document.getElementById('query1_output')
+          query_output2 = document.getElementById('iframe2_id').contentWindow.document.getElementById('query2_output')
+          query_output3 = document.getElementById('iframe3_id').contentWindow.document.getElementById('query3_output')
+          query_output4 = document.getElementById('iframe4_id').contentWindow.document.getElementById('query4_output')
+          query_output5 = document.getElementById('iframe5_id').contentWindow.document.getElementById('query5_output')
+          query_output6 = document.getElementById('iframe6_id').contentWindow.document.getElementById('query6_output')
+          query_output7 = document.getElementById('iframe7_id').contentWindow.document.getElementById('query7_output')
+          // delete queries
+          var delete_outputs = []
+          for (i=1; i<=1; i++) {
+            delete_outputs.push(document.getElementById('iframe' + i +'_id_delete').contentWindow.document.getElementById('delete'+ i +'_output'))
+          }
+          // update queries
+          var update_outputs = []
+          for (i=1; i<=4; i++) {
+            update_outputs.push(document.getElementById('iframe' + i +'_id_update').contentWindow.document.getElementById('update'+ i +'_output'))
+          }
+          // insert queries
+          var insert_outputs = []
+          for (i=1; i<=1; i++) {
+            insert_outputs.push(document.getElementById('iframe' + i +'_id_insert').contentWindow.document.getElementById('insert'+ i +'_output'))
+          }
+
+          if (query_output1) query_output1.style.display = "none"
+          if (query_output2) query_output2.style.display = "none"
+          if (query_output3) query_output3.style.display = "none"
+          if (query_output4) query_output4.style.display = "none"
+          if (query_output5) query_output5.style.display = "none"
+          if (query_output6) query_output6.style.display = "none"
+          if (query_output7) query_output7.style.display = "none"
+          // delete Queries
+          for (i=0; i<1; i++) {
+            if (delete_outputs[i]) delete_outputs[i].style.display = "none"
+          }
+          // update Queries
+          for (i=0; i<4; i++) {
+            if (update_outputs[i]) update_outputs[i].style.display = "none"
+          }
+          // insert Queries
+          for (i=0; i<1; i++) {
+            if (insert_outputs[i]) insert_outputs[i].style.display = "none"
+          }
+          // show all iframe content
+          document.getElementById('iframe1_id').style.display = "inline";
+          document.getElementById('iframe2_id').style.display = "inline";
+          document.getElementById('iframe3_id').style.display = "inline";
+          document.getElementById('iframe4_id').style.display = "inline";
+          document.getElementById('iframe5_id').style.display = "inline";
+          document.getElementById('iframe6_id').style.display = "inline";
+          document.getElementById('iframe7_id').style.display = "inline";
+          // delete Queries
+          for (i=1; i<=1; i++) {
+            document.getElementById('iframe' + i + '_id_delete').style.display = "inline";
+          }
+          // update Queries
+          for (i=1; i<=4; i++) {
+            document.getElementById('iframe' + i + '_id_update').style.display = "inline";
+          }
+          // insert Queries
+          for (i=1; i<=1; i++) {
+            document.getElementById('iframe' + i + '_id_insert').style.display = "inline";
+          }
+          // need to wipe out any form on screen
+          document.getElementById('iframe1_id').contentWindow.document.getElementById('query1').style.display = "none";
+          document.getElementById('iframe2_id').contentWindow.document.getElementById('query2').style.display = "none";
+          document.getElementById('iframe3_id').contentWindow.document.getElementById('query3').style.display = "none";
+          document.getElementById('iframe4_id').contentWindow.document.getElementById('query4').style.display = "none";
+          document.getElementById('iframe5_id').contentWindow.document.getElementById('query5').style.display = "none";
+          document.getElementById('iframe6_id').contentWindow.document.getElementById('query6').style.display = "none";
+          document.getElementById('iframe7_id').contentWindow.document.getElementById('query7').style.display = "none";
+          // delete Queries
+          for (i=1; i<=1; i++) {
+            document.getElementById('iframe'+ i +'_id_delete').contentWindow.document.getElementById('delete'+ i +'_form').style.display = "none";
+          }
+          // update Queries
+          for (i=1; i<=4; i++) {
+            document.getElementById('iframe'+ i +'_id_update').contentWindow.document.getElementById('update'+ i +'_form').style.display = "none";
+          }
+          // insert Queries
+          for (i=1; i<=1; i++) {
+            document.getElementById('iframe'+ i +'_id_insert').contentWindow.document.getElementById('insert'+ i +'_form').style.display = "none";
+          }
+          // set size of all iframes dynamically
+          iframeSize();
+        }
+      }
+
+      // setup iframe click events and iframe size
+      window.onload = function() { 
+        iframeClickHandler();
+      }
+
+      // function to handle an arbitrary click
+      function queryClick(evt, div_name, iframe_id) {
+        let i, content, button_links;
+
+        // remove all iframes
+        document.getElementById('iframe1_id').style.display = "none";
+        document.getElementById('iframe2_id').style.display = "none";
+        document.getElementById('iframe3_id').style.display = "none";
+        document.getElementById('iframe4_id').style.display = "none";
+        document.getElementById('iframe5_id').style.display = "none";
+        document.getElementById('iframe6_id').style.display = "none";
+        document.getElementById('iframe7_id').style.display = "none";
+          // delete Queries
+          for (i=1; i<=1; i++) {
+            document.getElementById('iframe' + i + '_id_delete').style.display = "none";
+          }
+          // update Queries
+          for (i=1; i<=4; i++) {
+            document.getElementById('iframe' + i + '_id_update').style.display = "none";
+          }
+          // insert Queries
+          for (i=1; i<=1; i++) {
+            document.getElementById('iframe' + i + '_id_insert').style.display = "none";
+          }
+        // show clicked iframe and corresponding form
+        document.getElementById(iframe_id).style.display = "inline"
+        iframe = document.getElementById(iframe_id);
+        iframe_content = iframe.contentWindow.document;
+        iframe_content.getElementById(div_name).style.display = "block";
+        iframeSize();
+      }
+    
+    </script>
+  </body>
+</html>

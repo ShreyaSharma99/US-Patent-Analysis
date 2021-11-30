@@ -1,0 +1,87 @@
+<style> 
+  /* css style for button effects is taken from here:*/
+  /* https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover */
+  .button {
+    background-color: #4CAF50; /* Green */
+    border:none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: block;
+  }
+  .ibutton1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+  .ibutton1:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  .insert_form {
+    display: none;
+  }
+  .insert1_output_class {
+    display: block;
+  }
+</style>
+<h2> Insert record for a new transaction </h2>
+<button id = "insert1_button" class="button ibutton1">
+  This feature lets the user enter a new transaction into
+the database with a range of fields to be taken as input.
+</button>
+
+<!-- show this onclicking query 1 button -->
+<div id = 'insert1_form' class="insert_form">
+  <br>
+  <form action="/form-handler1_insert" method="POST">
+    <!-- First Query -->
+    <div>
+      Company Name(e.g. abc): <input type="text" name='cname'>
+      Company Address1(e.g. address1): <input type="text" name='caddress1'><br>
+      Company Address2(e.g. address2):<input type="text" name='caddress2'>
+      Company Address3(e.g. address3): <input type="text" name='caddress3'><br>
+      Company Address4(e.g. address4): <input type="text" name='caddress4'>
+      Convey Text(e.g. MERGER): <input type="text" name='convey_text'><br>
+      Page Count(e.g. 12): <input type="number" name='page_count'>
+    <!-- Second Query -->
+    Assignor Name(e.g. RUSHIL): <input type="text" name='assignor_name'><br>
+      Execution Date(e.g. 2010-01-29): <input type="text" name='exec_date'>
+    <!-- Third Query --> 
+    EE Name(e.g. DWIJESH): <input type="text" name='ee_name'><br>
+      EE City(e.g. CHANDIGARH): <input type="text" name='ee_city'>
+      EE State(e.g. PUNJAB): <input type="text" name='ee_state'><br>
+      EE Postcode(e.g. 160043): <input type="text" name='ee_postcode'>
+      EE Country(e.g. INDIA): <input type="text" name='ee_country'><br>
+    <!-- query 4 -->
+      Title(e.g. DBMS): <input type="text" name='title'>
+      AppNo Document Number(e.g. 1234): <input type="text" name='appno_doc_num'><br>
+      AppNo Date(e.g. 2010-01-29): <input type="text" name='appno_date'>
+      AppNo Country(e.g. INDIA): <input type="text" name='appno_country'><br>
+      Document Grant Number(e.g. 5678): <input type="number" name='doc_grant_number'>
+      Grant Date(e.g. 2010-01-31): <input type="text" name='grant_date'><br>
+    <!-- Query 5 -->
+    Admin Application ID for Grant(e.g. 1234): <input type="text" name='admin_appl_id_for_grant'><br>
+    Admin Patent Number for AppNo(e.g. 5678): <input type="text" name='admin_pat_no_for_appno'><br>
+      Error(e.g. none): <input type="text" name='error'>
+    </div>
+    <input type='submit' value='Submit'>
+  </form>
+</div>
+
+<!-- show this after submitting the form -->
+<div id="insert1_output" class="insert1_output_class">  
+  Successfully Terminated
+</div>
+
+<script type="text/javascript">
+  var height = document.getElementById('insert1_output').parentElement.scrollHeight;
+  var parent_iframe = parent.document.getElementById('iframe1_id_insert');
+  parent_iframe.height = height;
+</script>
